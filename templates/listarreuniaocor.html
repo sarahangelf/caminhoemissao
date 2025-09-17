@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de reuniões</title>
+</head>
+<body>
+    <h1>Aqui estão as datas das reuniões</h1>
+    <hr>
+    {% for reuniao in lista %}
+    <a>{{reuniao[0]}}</a>
+    <a>{{reuniao[1]}}</a>
+    <a>{{reuniao[2]}}</a>
+    <br>
+    {% endfor %}
+</body>
+</html>

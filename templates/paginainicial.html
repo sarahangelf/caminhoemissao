@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Caminho e Missão</title>
+  <link rel="stylesheet" href="../static/paginainicial.css">
+</head>
+<body>
+  <div class="cabecario">
+    <h1>CAMINHO E MISSÃO</h1>
+  </div>
+  <div class="corpo">
+    <div class="escolhap">
+      <p>{{msgc}}</p>
+      <p>Coloque seu login</p>
+      <form action="/escolhapq" method="post">
+        <input type="text" name="login" placeholder="digite login"><br>
+        <input type="password" name="senha" placeholder="digite senha"><br>
+      <p>Escolha sua pastoral</p>
+        <select name="escolha">
+          <option value="batismo">Batismo</option>
+          <option value="catecumenato">Catecumenato</option>
+          <option value="coroinhas">Coroinhas</option>
+          <option value="liturgia">Liturgia</option>
+          <option value="pascom">Pascom</option>
+          <option value="terco">Terço da Juventude</option>
+        </select>
+        <button type="submit">Enviar</button>
+        <br>
+      </form>
+      <div class="erro">
+        <p>{{erro}}</p>
+        <a href="/mostraradicionaru">{{msgcadas}}</a>
+      </div>
+
+    </div>
+  </div>
+  <div class="rodape">
+    <p>"Em tudo amar e servir"</p>
+    <p>Santo Inácio de Loyola</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="../static/cadastraru.css">
+</head>
+<body>
+
+    <form action="/adicionarusuario" method="post">
+        <p> Digite o nome completo:</p>
+        <input type="text" name="login" placeholder="Digite seu login">
+        <br>
+        <p> Digite sua senha:</p>
+        <input type="password" name="senha" placeholder="Digite a senha">
+        <br>
+        <p> Digite sua pastoral:</p>
+            <select name="pastoral">
+              <option value="batismo">Batismo</option>
+              <option value="catecumenato">Catecumenato</option>
+              <option value="coroinhas">Coroinhas</option>
+              <option value="liturgia">Liturgia</option>
+              <option value="pascom">Pascom</option>
+              <option value="terco">Terço da Juventude</option>
+            </select>
+        <br> <br>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <!-- <div class="meio">
+        <p> Digite o seu login:</p>
+        <input type="text" name="login" placeholder="Digite login">
+     <br>
+      <p> Digite a sua senha:</p>
+        <input type="text" name="senha" placeholder="Digite a senha">
+        <button type="submit">Enviar</button>
+    </div> -->
+
+
+</body>
+</html>

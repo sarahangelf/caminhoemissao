@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de coroinhas</title>
+</head>
+<body>
+    <h1>Aqui estão os coroinhas desse mês</h1>
+    <hr>
+    {% for coroinha in lista %}
+    <a>{{coroinha[0]}}</a>
+    <a>{{coroinha[1]}}</a>
+    <a>{{coroinha[2]}}</a>
+    <br>
+    {% endfor %}
+</body>
+</html>

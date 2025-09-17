@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de reuniões</title>
+</head>
+<body>
+    <h1>Aqui estão as datas das reuniões</h1>
+    <hr>
+    {% for subs in lista %}
+    <a>{{subs[0]}}</a>
+    <a>{{subs[1]}}</a>
+    <a>{{subs[2]}}</a>
+    <br>
+    {% endfor %}
+</body>
+</html>

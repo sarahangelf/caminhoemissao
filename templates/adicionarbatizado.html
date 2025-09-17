@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adicione batizado</title>
+</head>
+<body>
+    <p>{{msg}}</p>
+    <form action="/adicionarbatizado" method="post">
+        <p>Digite o nome de quem vai se batizar:</p>
+        <input type="text" name="nome" placeholder="Digite o nome">
+        <br>
+        <p>Digite a data que deseja:</p>
+        <input type="text" name="data" placeholder="Digite a data">
+        <br>
+        <p>Digite o turno que deseja se batizar:</p>
+        <input type="text" name="turno" placeholder="Digite o turno">
+        <br> <br>
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>

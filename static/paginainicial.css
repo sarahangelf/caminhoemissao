@@ -1,0 +1,38 @@
+body{
+    background-color: floralwhite;
+    items-align: center;
+}
+
+.cabecario{
+    text-align: center;
+    margin-top: 50px;
+}
+
+.corpo{
+    display: flex;
+    margin-left: 480px;
+    margin-top: 220px;
+}
+
+.escolhap{
+    items-align: center;
+    text-align: center;
+    border: solid 2px black;
+    border-radius: 8px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 350px;
+    margin-right: 10px;
+}
+
+.erro{
+    color: red;
+    font-size:12px;
+}
+
+.rodape{
+    text-align:center;
+    margin-top: 350px;
+}
