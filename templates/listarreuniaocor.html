@@ -6,12 +6,15 @@
 </head>
 <body>
     <h1>Aqui estão as datas das reuniões</h1>
-    <br>
-    {% for reuniao in lista %}
-    <a>{{reuniao[0]}}</a>
-    <a>{{reuniao[1]}}</a>
-    <a>{{reuniao[2]}}</a>
-    <br>
-    {% endfor %}
+    <hr>
+    {% if lista %}
+        {% for reuniao in lista %}
+            <p>Data: {{reuniao[0]}}</p>
+            <p>Hora: {{reuniao[1]}}</p>
+            <p>Local: {{reuniao[2]}}</p>
+            <hr>
+        {% endfor %}
+    {% endif %}
+
 </body>
 </html>
