@@ -6,12 +6,15 @@
 </head>
 <body>
     <h1>Aqui estão as datas das reuniões</h1>
-    <br>
-    {% for subs in lista %}
-    <a>{{subs[0]}}</a>
-    <a>{{subs[1]}}</a>
-    <a>{{subs[2]}}</a>
-    <br>
-    {% endfor %}
+    <hr>
+    {% if lista %}
+        {% for subs in lista %}
+            <p>Nome: {{subs[0]}}</p>
+            <p>Data: {{subs[1]}}</p>
+            <p>Função: {{subs[2]}}</p>
+            <hr>
+        {% endfor %}
+    {% endif %}
+
 </body>
 </html>

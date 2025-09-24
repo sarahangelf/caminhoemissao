@@ -7,11 +7,14 @@
 <body>
     <h1>Aqui estão os batizados</h1>
     <hr>
-    {% for batizado in lista %}
-    <a>{{batizado[0]}}</a>
-    <a>{{batizado[1]}}</a>
-    <a>{{batizado[2]}}</a>
-    <br>
-    {% endfor %}
+    {% if lista %}
+        {% for batizado in lista %}
+            <p>Nome:{{batizado[0]}}</p>
+            <p>Data:{{batizado[1]}}</p>
+            <p>Turno:{{batizado[2]}}</p>
+            <hr>
+        {% endfor %}
+    {% endif %}
+
 </body>
 </html>
