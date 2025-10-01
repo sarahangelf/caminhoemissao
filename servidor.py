@@ -95,7 +95,7 @@ def adicionar_batizado():
 
 #LISTAR OS BATIZADOS
 @app.route('/listarbatismos', methods=['get'])
-def listar_cruchs():
+def listar_batismo():
     if len(batismos) > 0:
         return render_template('listarbatizados.html', lista=batismos)
 
@@ -112,10 +112,12 @@ def adicionar_catecumeno():
     return render_template('adicionarcatecumeno.html', msg=mensagem)
 
 
-#IFRAME QUE LEVA PARA A PÁGINA adicionarcatecumeno.html
-@app.route('/mostraradicionarc')
-def mostrar_add_catecumeno():
-    return render_template('adicionarcatecumeno.html')
+#LISTAR CATECUMENOS
+@app.route('/listarcatecumeno', methods=['get'])
+def listar_catecumeno():
+    if len(catecumeno) > 0:
+        return render_template('listarcatecumeno.html', lista=catecumeno)
+
 
 
 #ADICIONAR ENCONTRO
@@ -134,6 +136,12 @@ def adicionar_encontro():
 @app.route('/mostraradicionare')
 def mostrar_add_encontro():
     return render_template('adicionarencontro.html')
+
+#LISTAR ENCONTROS
+@app.route('/listarencontros', methods=['get'])
+def listar_encontros():
+    if len(encontro) > 0:
+        return render_template('listarencontro.html', lista=encontro)
 
 
 #LISTAR OS COROINHAS

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>lista de catecúmenos</title>
+</head>
+<body>
+    <h1>Esses são os catecúmenos</h1>
+    <br>
+    {% if lista %}
+        {% for catecumeno in lista %}
+            <p>Nome:{{catecumeno[0]}}</p>
+            <p>Data:{{catecumeno[1]}}</p>
+            <p>Bairro:{{catecumeno[2]}}</p>
+            <hr>
+        {% endfor %}
+    {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>lista de encontros</title>
+</head>
+<body>
+    <h1>Esses são os encontros:</h1>
+    <br>
+    {% if lista %}
+        {% for encontro in lista %}
+            <p>Data:{{encontro[0]}}</p>
+            <p>Turno:{{encontro[1]}}</p>
+            <p>Local:{{encontro[2]}}</p>
+            <hr>
+        {% endfor %}
+    {% endif %}
+
+</body>
+</html>
