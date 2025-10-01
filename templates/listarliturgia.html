@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista dos liturgianos</title>
+</head>
+<body>
+    <h1>Aqui estão os liturgianos desse mês: </h1>
+    <hr>
+    {% if lista %}
+        {% for liturgia in lista %}
+            <p>Nome: {{liturgia[0]}}</p>
+            <p>Data: {{liturgia[1]}}</p>
+            <p>Função: {{liturgia[2]}}</p>
+            <hr>
+        {% endfor %}
+    {% endif %}
+
+</body>
+</html>

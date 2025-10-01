@@ -11,7 +11,9 @@ subscor=[['milena', '11/09', 'missal']] #SUBSTITUIÇÕES DE COROINHAS, NOME, DAT
 pascom=[['rafael', '04/09'], ['ana', '23/09']] #NOME, DATA
 reuniaopas=[['17/09', '14:00', 'matriz']] #DATA, HORÁRIO E LOCAL
 subspas=[['ana', '23/09']] #SUBSTITUIÇÕES DE COROINHAS, NOME, DATA E FUNÇÃO
-
+liturgianos=[['Helena','02/10','2 leitura'],['Cedilma','03/10','1 leitura']]
+reuniaoli=[['matriz','26/10','manhã']]
+subsli=[['Diene','02/10', '2 leitura']]
 
 @app.route('/')
 def pagina_principal():
@@ -119,7 +121,6 @@ def listar_catecumeno():
         return render_template('listarcatecumeno.html', lista=catecumeno)
 
 
-
 #ADICIONAR ENCONTRO
 @app.route('/adicionarencontro', methods=['post'])
 def adicionar_encontro():
@@ -131,7 +132,6 @@ def adicionar_encontro():
     mensagem2 = 'Encontro adicionado com sucesso!'
     return render_template('adicionarencontro.html', msg=mensagem2)
 
-
 #IFRAME QUE LEVA PARA A PÁGINA adicionarencontro.html
 @app.route('/mostraradicionare')
 def mostrar_add_encontro():
@@ -142,7 +142,6 @@ def mostrar_add_encontro():
 def listar_encontros():
     if len(encontro) > 0:
         return render_template('listarencontro.html', lista=encontro)
-
 
 #LISTAR OS COROINHAS
 @app.route('/mostrarlistarescala', methods=['get'])
@@ -180,6 +179,23 @@ def listar_subspas():
     if len(subspas) > 0:
         return render_template('listarsubspas.html', lista=subspas)
 
+#LISTAR OS LITURGIANOS
+@app.route('/mostrarlistarescalali', methods=['get'])
+def listar_liturgianos():
+    if len(liturgia) > 0:
+        return render_template('listarliturgia.html', lista=liturgia)
+
+#LISTAR AS REUNIÕES DA LITURGIA
+@app.route('/mostrarlistarreuniaoli', methods=['get'])
+def listar_reunioesli():
+    if len(reuniaoli) > 0:
+        return render_template('listarreuniaoli.html', lista=reuniaoli)
+
+#LISTAR SUBSTITUIÇÕES LITURGIA
+@app.route('/mostrarlistarsubsli', methods=['get'])
+def listar_subsli():
+    if len(subsli) > 0:
+        return render_template('listarsubsli.html', lista=subsli)
 
 if __name__ == '__main__':
     app.run()

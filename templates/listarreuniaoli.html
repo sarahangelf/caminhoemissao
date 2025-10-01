@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista das reuniões liturgia</title>
+</head>
+<body>
+    <h1>Aqui estão as reuniões desse mês: </h1>
+    <hr>
+    {% if lista %}
+        {% for reuniaol in lista %}
+            <p>Local: {{reuniaol[0]}}</p>
+            <p>Data: {{reuniaol[1]}}</p>
+            <p>horário: {{reuniaol[2]}}</p>
+            <hr>
+        {% endfor %}
+    {% endif %}
+
+</body>
+</html>
