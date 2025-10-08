@@ -10,10 +10,13 @@ reuniaocor=[['13/09', '14:00', 'matriz']] #DATA, HORÁRIO E LOCAL
 subscor=[['milena', '11/09', 'missal']] #SUBSTITUIÇÕES DE COROINHAS, NOME, DATA E FUNÇÃO
 pascom=[['rafael', '04/09'], ['ana', '23/09']] #NOME, DATA
 reuniaopas=[['17/09', '14:00', 'matriz']] #DATA, HORÁRIO E LOCAL
-subspas=[['ana', '23/09']] #SUBSTITUIÇÕES DE COROINHAS, NOME, DATA E FUNÇÃO
-liturgianos=[['Helena','02/10','2 leitura'],['Cedilma','03/10','1 leitura']]
-reuniaoli=[['matriz','26/10','manhã']]
-subsli=[['Diene','02/10', '2 leitura']]
+subspas=[['ana', '23/09']] #SUBSTITUIÇÕES DE PASCOM, NOME, DATA E FUNÇÃO
+liturgianos=[['Helena','02/10','2 leitura'],['Cedilma','03/10','1 leitura']] #LITURGIANOS, NOME, DATA E FUNÇÃO
+reuniaoli=[['matriz','26/10','manhã']] #LOCAL,DATA E HORÁRIO
+subsli=[['Diene','02/10', '2 leitura']]#SUBSTITUIÇÕES DA LITURGIA, NOME, DATA E FUNÇÃO
+voluntarios=[['Nicolly','25/10','coral'],['cleiton','25/10','misterio']]
+reuniaoterco=[['20/10','19:00','matriz']]
+musicasterco=[['acaso não sabeis','colo de Deus','3 mistério'],['ave maria','colo de Deus','entrada de Nossa Senhora']]
 
 @app.route('/')
 def pagina_principal():
@@ -196,6 +199,24 @@ def listar_reunioesli():
 def listar_subsli():
     if len(subsli) > 0:
         return render_template('listarsubsli.html', lista=subsli)
+
+#LISTAR OS VOLUNTÁRIOS DO TERÇO
+@app.route('/mostrarlistarescalaterco', methods=['get'])
+def listar_voluntarios():
+    if len(voluntarios) > 0:
+        return render_template('listarescalasterco.html', lista=voluntarios)
+
+#LISTAR AS REUNIÕES DO TERÇO
+    @app.route('/mostrarlistarreuniaoterco', methods=['get'])
+    def listar_reunioesterco():
+        if len(reuniaoterco) > 0:
+            return render_template('listarreuniaoterco.html', lista=reuniaoterco)
+
+#LISTAR MÚSICAS TERÇO
+@app.route('/mostrarlistarmusicasterco', methods=['get'])
+def listar_musicasterco():
+    if len(musicasterco) > 0:
+        return render_template('listarmusicasterco.html', lista=musicasterco)
 
 if __name__ == '__main__':
     app.run()

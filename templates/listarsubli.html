@@ -2,16 +2,16 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Lista da liturgia-subs</title>
+    <title>Lista de substituições</title>
 </head>
 <body>
-    <h1>Aqui estão as substituições desse mês: </h1>
+    <h1>Aqui estão as datas das substituições</h1>
     <hr>
     {% if lista %}
-        {% for subs in lista %}
-            <p>Nome: {{subs[0]}}</p>
-            <p>Data: {{subs[1]}}</p>
-            <p>Função: {{subs[2]}}</p>
+        {% for subsli in lista %}
+            <p>Nome: {{subsli[0]}}</p>
+            <p>Data: {{subsli[1]}}</p>
+            <p>Função: {{subsli[2]}}</p>
             <hr>
         {% endfor %}
     {% endif %}
