@@ -1,10 +1,10 @@
 from flask import *
 
 app = Flask(__name__)
-usuarios = [['sarah','12',['batismo', 'coroinhas', 'pascom']], ['nicolly', '7', ['catecumenato', 'liturgia', 'terco']]] #nome, senha, pastoral
+usuarios = [['sarah','12',['batismo','catecumenato', 'coroinhas', 'liturgia', 'pascom', 'terco']], ['nicolly', '7', ['batismo','catecumenato', 'coroinhas', 'liturgia', 'pascom', 'terco']]] #nome, senha, pastoral
 batismos = [['levi', '16/08', 'manhã'], ['maria', '24/08', 'noite']]
-catecumeno= [['maria','23/09',['boa vista']], ['jose','24/09',['bela vista']]]
-encontro=[['29/08','manhã',['salao']], ['30/08','tarde',['igreja']]]
+catecumeno= [['maria','23/09','boa vista'], ['jose','24/09','bela vista']]
+encontro=[['29/08','manhã','salao'], ['30/08','tarde','igreja']]
 coroinhas=[['alice', '04/09', 'microfone'], ['milena', '11/09', 'missal']] #NOME, DATA E FUNÇÃO
 reuniaocor=[['13/09', '14:00', 'matriz']] #DATA, HORÁRIO E LOCAL
 subscor=[['milena', '11/09', 'missal']] #SUBSTITUIÇÕES DE COROINHAS, NOME, DATA E FUNÇÃO
@@ -110,7 +110,7 @@ def listar_batismo():
 def adicionar_catecumeno():
     global catecumeno
     nome = request.form.get('nome')
-    datadenascimento = request.form.get('data de nascimento')
+    datadenascimento = request.form.get('datadenascimento')
     bairro = request.form.get('bairro')
     catecumeno.append([nome,datadenascimento,bairro])
     mensagem = 'Catecúmeno adicionado com sucesso!'
@@ -140,11 +140,16 @@ def adicionar_encontro():
 def mostrar_add_encontro():
     return render_template('adicionarencontro.html')
 
+#IFRAME QUE LEVA PARA A PÁGINA adicionarcatecumeno.html
+@app.route('/mostraradicionarc')
+def mostrar_add_catecumeno():
+    return render_template('adicionarcatecumeno.html')
+
 #LISTAR ENCONTROS
 @app.route('/listarencontros', methods=['get'])
 def listar_encontros():
     if len(encontro) > 0:
-        return render_template('listarencontro.html', lista=encontro)
+        return render_template('listare.html', lista=encontro)
 
 #LISTAR OS COROINHAS
 @app.route('/mostrarlistarescala', methods=['get'])
