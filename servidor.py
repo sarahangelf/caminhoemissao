@@ -185,8 +185,8 @@ def listar_subspas():
 #LISTAR OS LITURGIANOS
 @app.route('/mostrarlistarescalali', methods=['get'])
 def listar_liturgianos():
-    if len(liturgia) > 0:
-        return render_template('listarliturgia.html', lista=liturgia)
+    if len(liturgianos) > 0:
+        return render_template('listarliturgia.html', lista=liturgianos)
 
 #LISTAR AS REUNIÕES DA LITURGIA
 @app.route('/mostrarlistarreuniaoli', methods=['get'])
@@ -207,10 +207,10 @@ def listar_voluntarios():
         return render_template('listarescalasterco.html', lista=voluntarios)
 
 #LISTAR AS REUNIÕES DO TERÇO
-    @app.route('/mostrarlistarreuniaoterco', methods=['get'])
-    def listar_reunioesterco():
-        if len(reuniaoterco) > 0:
-            return render_template('listarreuniaoterco.html', lista=reuniaoterco)
+@app.route('/mostrarlistarreuniaoterco', methods=['get'])
+def listar_reunioesterco():
+    if len(reuniaoterco) > 0:
+        return render_template('listarreuniaoterco.html', lista=reuniaoterco)
 
 #LISTAR MÚSICAS TERÇO
 @app.route('/mostrarlistarmusicasterco', methods=['get'])
