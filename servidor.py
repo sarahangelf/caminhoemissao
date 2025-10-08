@@ -203,7 +203,7 @@ def listar_reunioesli():
 @app.route('/mostrarlistarsubsli', methods=['get'])
 def listar_subsli():
     if len(subsli) > 0:
-        return render_template('listarsubsli.html', lista=subsli)
+        return render_template('listarsubli.html', lista=subsli)
 
 #LISTAR OS VOLUNTÁRIOS DO TERÇO
 @app.route('/mostrarlistarescalaterco', methods=['get'])
