@@ -1,7 +1,12 @@
 from flask import *
 
+
+
 app = Flask(__name__)
-usuarios = [['sarah','12',['batismo','catecumenato', 'coroinhas', 'liturgia', 'pascom', 'terco']], ['nicolly', '7', ['batismo','catecumenato', 'coroinhas', 'liturgia', 'pascom', 'terco']]] #nome, senha, pastoral
+
+app.secret_key = 'KJH#45K45JHQASs'
+
+usuarios = [['sarah','1',['batismo','catecumenato', 'coroinhas', 'liturgia', 'pascom', 'terco']], ['nicolly', '7', ['batismo','catecumenato', 'coroinhas', 'liturgia', 'pascom', 'terco']]] #nome, senha, pastoral
 batismos = [['levi', '16/08', 'manhã'], ['maria', '24/08', 'noite']]
 catecumeno= [['maria','23/09','boa vista'], ['jose','24/09','bela vista']]
 encontro=[['29/08','manhã','salao'], ['30/08','tarde','igreja']]
@@ -28,6 +33,11 @@ def escolhenp():
     login = request.form.get('login')
     senha = request.form.get('senha')
 
+    for user in usuarios:
+        if user[0] == login and user[1] == senha:
+            session['login'] = login
+            return render_template('menu.html')
+
     logado = False
     for u in usuarios:
         if login == u[0] and senha == u[1] and op in u[2]:
@@ -53,6 +63,41 @@ def escolhenp():
      msgc = 'Parece que você não tem login, se cadastre agora!'
      return render_template('paginainicial.html', erro = msg, msgcadas = msgc)
 
+#LEVAR PARA MENU
+@app.route('/menu')
+def mostrar_menu():
+    return render_template('menu.html')
+
+#LEVAR PARA BATISMO
+@app.route('/batismo')
+def mostrar_batismo():
+    return render_template('batismo.html')
+
+#LEVAR PARA CATECUMENATO
+@app.route('/catecumenato')
+def mostrar_catecumenato():
+    return render_template('catecumenato.html')
+
+#LEVAR PARA COROINHAS
+@app.route('/coroinhas')
+def mostrar_coroinhas():
+    return render_template('coroinhas.html')
+
+#LEVAR PARA LITURGIA
+@app.route('/liturgia')
+def mostrar_liturgia():
+    return render_template('liturgia.html')
+
+#LEVAR PARA PASCOM
+@app.route('/pascom')
+def mostrar_pascom():
+    return render_template('pascom.html')
+
+#LEVAR PARA TERÇO
+@app.route('/terco')
+def mostrar_terco():
+    return render_template('terco.html')
+
 #LEVAR PARA A PÁGINA DE CADASTRAR USUÁRIO
 @app.route('/mostraradicionaru')
 def mostrar_add_usuario():
@@ -73,11 +118,12 @@ def adicionar_usuario():
 
 @app.route('/verificarlogin', methods=['post'])
 def verificar_logado():
-    nome_pessoa = request.form.get('login')
-    if nome_pessoa.lower() in usuarios:
-        return render_template('login.html')
-    else:
-        return render_template('paginainicial.html')
+    login = request.form.get('login')
+    senha = request.form.get('senha')
+
+
+
+    return render_template('paginainicial.html')
 
 
 #IFRAME QUE LEVA PARA A PÁGINA adicionarbatizado.html
@@ -101,9 +147,11 @@ def adicionar_batizado():
 #LISTAR OS BATIZADOS
 @app.route('/listarbatismos', methods=['get'])
 def listar_batismo():
-    if len(batismos) > 0:
-        return render_template('listarbatizados.html', lista=batismos)
-
+    if 'login' in session:
+        if len(batismos) > 0:
+            return render_template('listarbatizados.html', lista=batismos)
+    else:
+        return render_template('paginainicial.html')
 
 #ADICIONAR CATECUMENO
 @app.route('/adicionarcatecumeno', methods=['post'])
