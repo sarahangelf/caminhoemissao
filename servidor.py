@@ -69,32 +69,32 @@ def mostrar_menu():
 #LEVAR PARA BATISMO
 @app.route('/batismo')
 def mostrar_batismo():
-    return render_template('batismo.html')
+    return render_template('batismo/batismo.html')
 
 #LEVAR PARA CATECUMENATO
 @app.route('/catecumenato')
 def mostrar_catecumenato():
-    return render_template('catecumenato.html')
+    return render_template('catecumenato/catecumenato.html')
 
 #LEVAR PARA COROINHAS
 @app.route('/coroinhas')
 def mostrar_coroinhas():
-    return render_template('coroinhas.html')
+    return render_template('coroinhas/coroinhas.html')
 
 #LEVAR PARA LITURGIA
 @app.route('/liturgia')
 def mostrar_liturgia():
-    return render_template('liturgia.html')
+    return render_template('liturgia/liturgia.html')
 
 #LEVAR PARA PASCOM
 @app.route('/pascom')
 def mostrar_pascom():
-    return render_template('pascom.html')
+    return render_template('pascom/pascom.html')
 
 #LEVAR PARA TERÇO
 @app.route('/terco')
 def mostrar_terco():
-    return render_template('terco.html')
+    return render_template('terco/terco.html')
 
 #LEVAR PARA A PÁGINA DE CADASTRAR USUÁRIO
 @app.route('/mostraradicionaru')
