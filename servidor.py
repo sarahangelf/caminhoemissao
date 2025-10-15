@@ -127,7 +127,7 @@ def verificar_logado():
 #IFRAME QUE LEVA PARA A PÁGINA adicionarbatizado.html
 @app.route('/mostraradicionarb')
 def mostrar_add_batizado():
-    return render_template('adicionarbatizado.html')
+    return render_template('batismo/adicionarbatizado.html')
 
 
 #ADICIONAR BATIZADO
@@ -140,14 +140,14 @@ def adicionar_batizado():
     batismos.append([nomeb, datab, turnob])
 
     mensagem = 'Seu batizado foi marcado com sucesso!'
-    return render_template('adicionarbatizado.html', msg=mensagem)
+    return render_template('batismo/adicionarbatizado.html', msg=mensagem)
 
 #LISTAR OS BATIZADOS
 @app.route('/listarbatismos', methods=['get'])
 def listar_batismo():
     if 'login' in session:
         if len(batismos) > 0:
-            return render_template('listarbatizados.html', lista=batismos)
+            return render_template('batismo/listarbatizados.html', lista=batismos)
     else:
         return render_template('paginainicial.html')
 
@@ -160,14 +160,14 @@ def adicionar_catecumeno():
     bairro = request.form.get('bairro')
     catecumeno.append([nome,datadenascimento,bairro])
     mensagem = 'Catecúmeno adicionado com sucesso!'
-    return render_template('adicionarcatecumeno.html', msg=mensagem)
+    return render_template('catecumenato/adicionarcatecumeno.html', msg=mensagem)
 
 
 #LISTAR CATECUMENOS
 @app.route('/listarcatecumeno', methods=['get'])
 def listar_catecumeno():
     if len(catecumeno) > 0:
-        return render_template('listarcatecumeno.html', lista=catecumeno)
+        return render_template('catecumenato/listarcatecumeno.html', lista=catecumeno)
 
 
 #ADICIONAR ENCONTRO
@@ -179,95 +179,95 @@ def adicionar_encontro():
     local = request.form.get ('local')
     encontro.append([data,horario,local])
     mensagem2 = 'Encontro adicionado com sucesso!'
-    return render_template('adicionarencontro.html', msg=mensagem2)
+    return render_template('catecumenato/adicionarencontro.html', msg=mensagem2)
 
 #IFRAME QUE LEVA PARA A PÁGINA adicionarencontro.html
 @app.route('/mostraradicionare')
 def mostrar_add_encontro():
-    return render_template('adicionarencontro.html')
+    return render_template('catecumenato/adicionarencontro.html')
 
 #IFRAME QUE LEVA PARA A PÁGINA adicionarcatecumeno.html
 @app.route('/mostraradicionarc')
 def mostrar_add_catecumeno():
-    return render_template('adicionarcatecumeno.html')
+    return render_template('catecumenato/adicionarcatecumeno.html')
 
 #LISTAR ENCONTROS
 @app.route('/listarencontros', methods=['get'])
 def listar_encontros():
     if len(encontro) > 0:
-        return render_template('listare.html', lista=encontro)
+        return render_template('catecumenato/listare.html', lista=encontro)
 
 #LISTAR OS COROINHAS
 @app.route('/mostrarlistarescala', methods=['get'])
 def listar_coroinhas():
     if len(coroinhas) > 0:
-        return render_template('listarcoroinhas.html', lista=coroinhas)
+        return render_template('coroinhas/listarcoroinhas.html', lista=coroinhas)
 
 #LISTAR AS REUNIÕES
 @app.route('/mostrarlistarreuniao', methods=['get'])
 def listar_reunioescor():
     if len(reuniaocor) > 0:
-        return render_template('listarreuniaocor.html', lista=reuniaocor)
+        return render_template('coroinhas/listarreuniaocor.html', lista=reuniaocor)
 
 #LISTAR SUBSTITUIÇÕES
 @app.route('/mostrarlistarsubs', methods=['get'])
 def listar_subscor():
     if len(subscor) > 0:
-        return render_template('listarsubscor.html', lista=subscor)
+        return render_template('coroinhas/listarsubscor.html', lista=subscor)
 
 #LISTAR OS PASCOM
 @app.route('/mostrarlistarescalapas', methods=['get'])
 def listar_pascom():
     if len(pascom) > 0:
-        return render_template('listarpascom.html', lista=pascom)
+        return render_template('pascom/listarpascom.html', lista=pascom)
 
 #LISTAR AS REUNIÕES PASCOM
 @app.route('/mostrarlistarreuniaopas', methods=['get'])
 def listar_reunioespas():
     if len(reuniaopas) > 0:
-        return render_template('listarreuniaopas.html', lista=reuniaopas)
+        return render_template('pascom/listarreuniaopas.html', lista=reuniaopas)
 
 #LISTAR SUBSTITUIÇÕES PASCOM
 @app.route('/mostrarlistarsubspas', methods=['get'])
 def listar_subspas():
     if len(subspas) > 0:
-        return render_template('listarsubspas.html', lista=subspas)
+        return render_template('pascom/listarsubspas.html', lista=subspas)
 
 #LISTAR OS LITURGIANOS
 @app.route('/mostrarlistarescalali', methods=['get'])
 def listar_liturgianos():
     if len(liturgianos) > 0:
-        return render_template('listarliturgia.html', lista=liturgianos)
+        return render_template('liturgia/listarliturgia.html', lista=liturgianos)
 
 #LISTAR AS REUNIÕES DA LITURGIA
 @app.route('/mostrarlistarreuniaoli', methods=['get'])
 def listar_reunioesli():
     if len(reuniaoli) > 0:
-        return render_template('listarreuniaoli.html', lista=reuniaoli)
+        return render_template('liturgia/listarreuniaoli.html', lista=reuniaoli)
 
 #LISTAR SUBSTITUIÇÕES LITURGIA
 @app.route('/mostrarlistarsubsli', methods=['get'])
 def listar_subsli():
     if len(subsli) > 0:
-        return render_template('listarsubli.html', lista=subsli)
+        return render_template('liturgia/listarsubli.html', lista=subsli)
 
 #LISTAR OS VOLUNTÁRIOS DO TERÇO
 @app.route('/mostrarlistarescalaterco', methods=['get'])
 def listar_voluntarios():
     if len(voluntarios) > 0:
-        return render_template('listarescalasterco.html', lista=voluntarios)
+        return render_template('terco/listarescalasterco.html', lista=voluntarios)
 
 #LISTAR AS REUNIÕES DO TERÇO
 @app.route('/mostrarlistarreuniaoterco', methods=['get'])
 def listar_reunioesterco():
     if len(reuniaoterco) > 0:
-        return render_template('listarreuniaoterco.html', lista=reuniaoterco)
+        return render_template('terco/listarreuniaoterco.html', lista=reuniaoterco)
 
 #LISTAR MÚSICAS TERÇO
 @app.route('/mostrarlistarmusicasterco', methods=['get'])
 def listar_musicasterco():
     if len(musicasterco) > 0:
-        return render_template('listarmusicasterco.html', lista=musicasterco)
+        return render_template('terco/listarmusicasterco.html', lista=musicasterco)
 
 if __name__ == '__main__':
     app.run()
