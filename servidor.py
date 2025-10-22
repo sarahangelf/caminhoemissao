@@ -5,8 +5,8 @@ app = Flask(__name__)
 app.secret_key = 'KJH#45K45JHQASs'
 
 usuarios = [['sarah','1',['batismo','catecumenato', 'coroinhas', 'liturgia', 'pascom', 'terco']], ['nicolly', '7', ['batismo','catecumenato', 'coroinhas', 'liturgia', 'pascom', 'terco']]] #nome, senha, pastoral
-batismos = [['levi', '16/08', 'manhã'], ['maria', '24/08', 'noite']]
-catecumeno= [['maria','23/09','boa vista'], ['jose','24/09','bela vista']]
+batismos = [['levi', '16/08', 'manhã'], ['maria', '24/08', 'noite']] #LISTA DE BATIZADOS
+catecumeno= [['maria','23/09','boa vista'], ['jose','24/09','bela vista']] #LISTA DE CATECUMENOS
 encontro=[['29/08','manhã','salao'], ['30/08','tarde','igreja']]
 coroinhas=[['alice', '04/09', 'microfone'], ['milena', '11/09', 'missal']] #NOME, DATA E FUNÇÃO
 reuniaocor=[['13/09', '14:00', 'matriz']] #DATA, HORÁRIO E LOCAL
@@ -17,9 +17,9 @@ subspas=[['ana', '23/09']] #SUBSTITUIÇÕES DE PASCOM, NOME, DATA E FUNÇÃO
 liturgianos=[['Helena','02/10','2 leitura'],['Cedilma','03/10','1 leitura']] #LITURGIANOS, NOME, DATA E FUNÇÃO
 reuniaoli=[['matriz','26/10','manhã']] #LOCAL,DATA E HORÁRIO
 subsli=[['Diene','02/10', '2 leitura']]#SUBSTITUIÇÕES DA LITURGIA, NOME, DATA E FUNÇÃO
-voluntarios=[['Nicolly','25/10','coral'],['cleiton','25/10','misterio']]
-reuniaoterco=[['20/10','19:00','matriz']]
-musicasterco=[['acaso não sabeis','colo de Deus','3 mistério'],['ave maria','colo de Deus','entrada de Nossa Senhora']]
+voluntarios=[['Nicolly','25/10','coral'],['cleiton','25/10','misterio']] #LISTA DE VOLUNTÁRIOS
+reuniaoterco=[['20/10','19:00','matriz']] #LISTA DE REUNIÕES DO TERÇO
+musicasterco=[['acaso não sabeis','colo de Deus','3 mistério'],['ave maria','colo de Deus','entrada de Nossa Senhora']] #LISTA DE MÚSICAS DO TERÇO
 
 @app.route('/')
 def pagina_principal():
