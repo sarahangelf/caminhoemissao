@@ -57,9 +57,8 @@ def escolhenp():
             return render_template('terco.html')
 
     else:
-     msg = '*erro ao fazer login'
-     msgc = 'Parece que você não tem login, se cadastre agora!'
-     return render_template('paginainicial.html', erro = msg, msgcadas = msgc)
+     msg = '*ERRO! O login ou a senha está errado!'
+     return render_template('paginainicial.html', erro = msg)
 
 #LEVAR PARA MENU
 @app.route('/menu')
