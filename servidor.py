@@ -23,7 +23,9 @@ musicasterco=[['acaso não sabeis','colo de Deus','3 mistério'],['ave maria','c
 
 @app.route('/')
 def pagina_principal():
-    return render_template('paginainicial.html')
+    return render_template('home/paginainicial.html')
+
+
 
 @app.route('/escolhapq', methods=['post'])
 def escolhenp():
@@ -34,7 +36,7 @@ def escolhenp():
     for user in usuarios:
         if user[0] == login and user[1] == senha:
             session['login'] = login
-            return render_template('menu.html')
+            return render_template('home/menu.html')
 
     logado = False
     for u in usuarios:
@@ -58,12 +60,13 @@ def escolhenp():
 
     else:
      msg = '*ERRO! O login ou a senha está errado!'
-     return render_template('paginainicial.html', erro = msg)
+     return render_template('home/paginainicial.html', erro = msg)
+
 
 #LEVAR PARA MENU
 @app.route('/menu')
 def mostrar_menu():
-    return render_template('menu.html')
+    return render_template('home/menu.html')
 
 #LEVAR PARA BATISMO
 @app.route('/batismo')
@@ -98,7 +101,7 @@ def mostrar_terco():
 #LEVAR PARA A PÁGINA DE CADASTRAR USUÁRIO
 @app.route('/mostraradicionaru')
 def mostrar_add_usuario():
-    return render_template('cadastraru.html')
+    return render_template('home/cadastraru.html')
 
 #ADICIONAR USUÁRIO
 @app.route('/adicionarusuario', methods=['post'])
@@ -110,7 +113,7 @@ def adicionar_usuario():
     usuarios.append([login,senha,pastoral])
     print (usuarios)
     mensagem = 'Usuário adicionado com sucesso!'
-    return render_template('paginainicial.html', msgc=mensagem)
+    return render_template('home/paginainicial.html', msgc=mensagem)
 
 
 @app.route('/verificarlogin', methods=['post'])
@@ -120,7 +123,7 @@ def verificar_logado():
 
 
 
-    return render_template('paginainicial.html')
+    return render_template('home/paginainicial.html')
 
 
 #IFRAME QUE LEVA PARA A PÁGINA adicionarbatizado.html
@@ -148,7 +151,7 @@ def listar_batismo():
         if len(batismos) > 0:
             return render_template('batismo/listarbatizados.html', lista=batismos)
     else:
-        return render_template('paginainicial.html')
+        return render_template('home/paginainicial.html')
 
 #ADICIONAR CATECUMENO
 @app.route('/adicionarcatecumeno', methods=['post'])

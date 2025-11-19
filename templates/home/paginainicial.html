@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Caminho e Missão</title>
-  <link rel="stylesheet" href="../static/paginainicial.css">
+  <link rel="stylesheet" href="../static/css/home/paginainicial.css">
 </head>
 <body>
   <div class="cabecario">
@@ -16,18 +16,18 @@
       <form action="/escolhapq" method="post">
         <input type="text" name="login" placeholder="digite login"><br><br>
         <input type="password" name="senha" placeholder="digite senha"><br>
-      <p>Escolha sua pastoral</p>
-        <select name="escolha">
-          <option value="batismo">Batismo</option>
-          <option value="catecumenato">Catecumenato</option>
-          <option value="coroinhas">Coroinhas</option>
-          <option value="liturgia">Liturgia</option>
-          <option value="pascom">Pascom</option>
-          <option value="terco">Terço da Juventude</option>
-        </select>
-        <br> <br>
-        <button type="submit">Enviar</button>
-        <br>
+        <p>Escolha sua pastoral</p>
+          <select name="escolha">
+            <option value="batismo">Batismo</option>
+            <option value="catecumenato">Catecumenato</option>
+            <option value="coroinhas">Coroinhas</option>
+            <option value="liturgia">Liturgia</option>
+            <option value="pascom">Pascom</option>
+            <option value="terco">Terço da Juventude</option>
+          </select>
+          <br> <br>
+          <button type="submit">Enviar</button>
+          <br>
       </form>
       <div class="erro">
         <p>{{erro}}</p>

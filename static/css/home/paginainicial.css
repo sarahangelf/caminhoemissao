@@ -9,9 +9,6 @@ body{
     margin-bottom: 50px;
 }
 
-.corpo{
-    ,
-}
 
 .escolhap{
     text-align: center;
@@ -31,13 +28,13 @@ a {
 }
 
 button {
-    padding: 8px 40px; /* Espaçamento interno do botão */
-    border: solid 1px; /* Remove a borda padrão */
-    border-radius: 5px; /* Borda arredondada */
-    background-color: floralwhite; /* Cor de fundo do botão */
-    color: #270808; /* Cor do texto do botão */
-    font-size: 13px; /* Tamanho da fonte */
-    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    padding: 8px 40px;
+    border: solid 1px;
+    border-radius: 5px;
+    background-color: floralwhite;
+    color: #270808;
+    font-size: 13px;
+    cursor: pointer;
 }
 
 input {
