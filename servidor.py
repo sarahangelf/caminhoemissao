@@ -38,7 +38,7 @@ def escolhenp():
             session['login'] = login
             return render_template('home/menu.html')
 
-    logado = False
+    '''logado = False
     for u in usuarios:
         if login == u[0] and senha == u[1] and op in u[2]:
             logado = True
@@ -60,89 +60,151 @@ def escolhenp():
 
     else:
      msg = '*ERRO! O login ou a senha está errado!'
-     return render_template('home/paginainicial.html', erro = msg)
+     return render_template('home/paginainicial.html', erro = msg)'''
 
 
 #LEVAR PARA MENU
 @app.route('/menu')
 def mostrar_menu():
-    return render_template('home/menu.html')
+    if 'login' in session:
+        if len(batismos) > 0:
+            return render_template('home/menu.html')
+    else:
+        return render_template('home/paginainicial.html')
+
 
 #LEVAR PARA BATISMO
 @app.route('/batismo')
 def mostrar_batismo():
-    return render_template('batismo/batismo.html')
+    if 'login' in session:
+        if len(batismos) > 0:
+            return render_template('batismo/batismo.html')
+    else:
+        return render_template('home/paginainicial.html')
+
 
 #LEVAR PARA CATECUMENATO
 @app.route('/catecumenato')
 def mostrar_catecumenato():
-    return render_template('catecumenato/catecumenato.html')
+    if 'login' in session:
+        if len(catecumeno) > 0:
+            return render_template('catecumenato/catecumenato.html')
+    else:
+        return render_template('home/paginainicial.html')
+
 
 #LEVAR PARA COROINHAS
 @app.route('/coroinhas')
 def mostrar_coroinhas():
-    return render_template('coroinhas/coroinhas.html')
+    if 'login' in session:
+        if len(coroinhas) > 0:
+            return render_template('coroinhas/coroinhas.html')
+
+    else:
+        return render_template('home/paginainicial.html')
 
 #LEVAR PARA LITURGIA
 @app.route('/liturgia')
 def mostrar_liturgia():
-    return render_template('liturgia/liturgia.html')
+    if 'login' in session:
+        if len(liturgianos) > 0:
+            return render_template('liturgia/liturgia.html')
+
+    else:
+        return render_template('home/paginainicial.html')
+
 
 #LEVAR PARA PASCOM
 @app.route('/pascom')
 def mostrar_pascom():
-    return render_template('pascom/pascom.html')
+    if 'login' in session:
+        if len(pascom) > 0:
+            return render_template('pascom/pascom.html')
+
+    else:
+        return render_template('home/paginainicial.html')
+
 
 #LEVAR PARA TERÇO
 @app.route('/terco')
 def mostrar_terco():
-    return render_template('terco/terco.html')
+    if 'login' in session:
+        if len(voluntarios) > 0:
+            return render_template('terco/terco.html')
+
+    else:
+        return render_template('home/paginainicial.html')
+
 
 #LEVAR PARA A PÁGINA DE CADASTRAR USUÁRIO
 @app.route('/mostraradicionaru')
 def mostrar_add_usuario():
-    return render_template('home/cadastraru.html')
+    if 'login' in session:
+        if len(usuarios) > 0:
+            return render_template('home/cadastraru.html')
+
+    else:
+        return render_template('home/paginainicial.html')
+
 
 #ADICIONAR USUÁRIO
 @app.route('/adicionarusuario', methods=['post'])
 def adicionar_usuario():
-    global usuarios
-    login = request.form.get('login')
-    senha = request.form.get('senha')
-    pastoral = request.form.get('pastoral')
-    usuarios.append([login,senha,pastoral])
-    print (usuarios)
-    mensagem = 'Usuário adicionado com sucesso!'
-    return render_template('home/paginainicial.html', msgc=mensagem)
+    if 'login' in session:
+        global usuarios
+        if len(usuarios) > 0:
+            login = request.form.get('login')
+            senha = request.form.get('senha')
+            pastoral = request.form.get('pastoral')
+            usuarios.append([login,senha,pastoral])
+            print (usuarios)
+            mensagem = 'Usuário adicionado com sucesso!'
+            return render_template('home/paginainicial.html', msgc=mensagem)
+
+    else:
+        return render_template('home/paginainicial.html')
+
 
 
 @app.route('/verificarlogin', methods=['post'])
 def verificar_logado():
-    login = request.form.get('login')
-    senha = request.form.get('senha')
+    if 'login' in session:
+        if len(usuarios) > 0:
+            login = request.form.get('login')
+            senha = request.form.get('senha')
 
+            return render_template('home/paginainicial.html')
 
-
-    return render_template('home/paginainicial.html')
+    else:
+        return render_template('home/paginainicial.html')
 
 
 #IFRAME QUE LEVA PARA A PÁGINA adicionarbatizado.html
 @app.route('/mostraradicionarb')
 def mostrar_add_batizado():
-    return render_template('batismo/adicionarbatizado.html')
+    if 'login' in session:
+        if len(batismos) > 0:
+            return render_template('batismo/adicionarbatizado.html')
+    else:
+        return render_template('home/paginainicial.html')
+
 
 
 #ADICIONAR BATIZADO
 @app.route('/adicionarbatizado', methods=['post'])
 def adicionar_batizado():
-    global batismos
-    nomeb = request.form.get('nome')
-    datab = request.form.get('data')
-    turnob = request.form.get('turno')
-    batismos.append([nomeb, datab, turnob])
+    if 'login' in session:
+        global batismos
+        if len(batismos) > 0:
+            nomeb = request.form.get('nome')
+            datab = request.form.get('data')
+            turnob = request.form.get('turno')
+            batismos.append([nomeb, datab, turnob])
 
-    mensagem = 'Seu batizado foi marcado com sucesso!'
-    return render_template('batismo/adicionarbatizado.html', msg=mensagem)
+            mensagem = 'Seu batizado foi marcado com sucesso!'
+            return render_template('batismo/adicionarbatizado.html', msg=mensagem)
+    else:
+        return render_template('home/paginainicial.html')
 
 #LISTAR OS BATIZADOS
 @app.route('/listarbatismos', methods=['get'])
@@ -156,13 +218,18 @@ def listar_batismo():
 #ADICIONAR CATECUMENO
 @app.route('/adicionarcatecumeno', methods=['post'])
 def adicionar_catecumeno():
-    global catecumeno
-    nome = request.form.get('nome')
-    datadenascimento = request.form.get('datadenascimento')
-    bairro = request.form.get('bairro')
-    catecumeno.append([nome,datadenascimento,bairro])
-    mensagem = 'Catecúmeno adicionado com sucesso!'
-    return render_template('catecumenato/adicionarcatecumeno.html', msg=mensagem)
+    if 'login' in session:
+        global catecumeno
+        if len(catecumeno) > 0:
+            nome = request.form.get('nome')
+            datadenascimento = request.form.get('datadenascimento')
+            bairro = request.form.get('bairro')
+            catecumeno.append([nome,datadenascimento,bairro])
+            mensagem = 'Catecúmeno adicionado com sucesso!'
+            return render_template('catecumenato/adicionarcatecumeno.html', msg=mensagem)
+
+    else:
+        return render_template('home/paginainicial.html')
 
 
 #LISTAR CATECUMENOS
@@ -175,101 +242,121 @@ def listar_catecumeno():
 #ADICIONAR ENCONTRO
 @app.route('/adicionarencontro', methods=['post'])
 def adicionar_encontro():
-    global encontro
-    data = request.form.get('data')
-    horario = request.form.get('horario')
-    local = request.form.get ('local')
-    encontro.append([data,horario,local])
-    mensagem2 = 'Encontro adicionado com sucesso!'
-    return render_template('catecumenato/adicionarencontro.html', msg=mensagem2)
+    if 'login' in session:
+        global encontro
+        if len(encontro) > 0:
+            data = request.form.get('data')
+            horario = request.form.get('horario')
+            local = request.form.get ('local')
+            encontro.append([data,horario,local])
+            mensagem2 = 'Encontro adicionado com sucesso!'
+            return render_template('catecumenato/adicionarencontro.html', msg=mensagem2)
+
 
 #IFRAME QUE LEVA PARA A PÁGINA adicionarencontro.html
 @app.route('/mostraradicionare')
 def mostrar_add_encontro():
-    return render_template('catecumenato/adicionarencontro.html')
+    if 'login' in session:
+        if len(encontro) > 0:
+         return render_template('catecumenato/adicionarencontro.html')
 
 #IFRAME QUE LEVA PARA A PÁGINA adicionarcatecumeno.html
 @app.route('/mostraradicionarc')
 def mostrar_add_catecumeno():
-    return render_template('catecumenato/adicionarcatecumeno.html')
+    if 'login' in session:
+        if len(catecumeno) > 0:
+            return render_template('catecumenato/adicionarcatecumeno.html')
 
 #LISTAR ENCONTROS
 @app.route('/listarencontros', methods=['get'])
 def listar_encontros():
-    if len(encontro) > 0:
-        return render_template('catecumenato/listare.html', lista=encontro)
+    if 'login' in session:
+         if len(encontro) > 0:
+            return render_template('catecumenato/listare.html', lista=encontro)
 
 #LISTAR OS COROINHAS
 @app.route('/mostrarlistarescala', methods=['get'])
 def listar_coroinhas():
-    if len(coroinhas) > 0:
-        return render_template('coroinhas/listarcoroinhas.html', lista=coroinhas)
+    if 'login' in session:
+         if len(coroinhas) > 0:
+            return render_template('coroinhas/listarcoroinhas.html', lista=coroinhas)
 
 #LISTAR AS REUNIÕES
 @app.route('/mostrarlistarreuniao', methods=['get'])
 def listar_reunioescor():
-    if len(reuniaocor) > 0:
-        return render_template('coroinhas/listarreuniaocor.html', lista=reuniaocor)
+    if 'login' in session:
+        if len(reuniaocor) > 0:
+            return render_template('coroinhas/listarreuniaocor.html', lista=reuniaocor)
 
 #LISTAR SUBSTITUIÇÕES
 @app.route('/mostrarlistarsubs', methods=['get'])
 def listar_subscor():
-    if len(subscor) > 0:
-        return render_template('coroinhas/listarsubscor.html', lista=subscor)
+    if 'login' in session:
+         if len(subscor) > 0:
+            return render_template('coroinhas/listarsubscor.html', lista=subscor)
 
 #LISTAR OS PASCOM
 @app.route('/mostrarlistarescalapas', methods=['get'])
 def listar_pascom():
-    if len(pascom) > 0:
-        return render_template('pascom/listarpascom.html', lista=pascom)
+    if 'login' in session:
+        if len(pascom) > 0:
+            return render_template('pascom/listarpascom.html', lista=pascom)
 
 #LISTAR AS REUNIÕES PASCOM
 @app.route('/mostrarlistarreuniaopas', methods=['get'])
 def listar_reunioespas():
-    if len(reuniaopas) > 0:
-        return render_template('pascom/listarreuniaopas.html', lista=reuniaopas)
+    if 'login' in session:
+        if len(reuniaopas) > 0:
+            return render_template('pascom/listarreuniaopas.html', lista=reuniaopas)
 
 #LISTAR SUBSTITUIÇÕES PASCOM
 @app.route('/mostrarlistarsubspas', methods=['get'])
 def listar_subspas():
-    if len(subspas) > 0:
-        return render_template('pascom/listarsubspas.html', lista=subspas)
+    if 'login' in session:
+        if len(subspas) > 0:
+            return render_template('pascom/listarsubspas.html', lista=subspas)
 
 #LISTAR OS LITURGIANOS
 @app.route('/mostrarlistarescalali', methods=['get'])
 def listar_liturgianos():
-    if len(liturgianos) > 0:
-        return render_template('liturgia/listarliturgia.html', lista=liturgianos)
+    if 'login' in session:
+        if len(liturgianos) > 0:
+            return render_template('liturgia/listarliturgia.html', lista=liturgianos)
 
 #LISTAR AS REUNIÕES DA LITURGIA
 @app.route('/mostrarlistarreuniaoli', methods=['get'])
 def listar_reunioesli():
-    if len(reuniaoli) > 0:
-        return render_template('liturgia/listarreuniaoli.html', lista=reuniaoli)
+    if 'login' in session:
+        if len(reuniaoli) > 0:
+            return render_template('liturgia/listarreuniaoli.html', lista=reuniaoli)
 
 #LISTAR SUBSTITUIÇÕES LITURGIA
 @app.route('/mostrarlistarsubsli', methods=['get'])
 def listar_subsli():
-    if len(subsli) > 0:
-        return render_template('liturgia/listarsubli.html', lista=subsli)
+    if 'login' in session:
+        if len(subsli) > 0:
+            return render_template('liturgia/listarsubli.html', lista=subsli)
 
 #LISTAR OS VOLUNTÁRIOS DO TERÇO
 @app.route('/mostrarlistarescalaterco', methods=['get'])
 def listar_voluntarios():
-    if len(voluntarios) > 0:
-        return render_template('terco/listarescalasterco.html', lista=voluntarios)
+    if 'login' in session:
+        if len(voluntarios) > 0:
+            return render_template('terco/listarescalasterco.html', lista=voluntarios)
 
 #LISTAR AS REUNIÕES DO TERÇO
 @app.route('/mostrarlistarreuniaoterco', methods=['get'])
 def listar_reunioesterco():
-    if len(reuniaoterco) > 0:
-        return render_template('terco/listarreuniaoterco.html', lista=reuniaoterco)
+    if 'login' in session:
+        if len(reuniaoterco) > 0:
+            return render_template('terco/listarreuniaoterco.html', lista=reuniaoterco)
 
 #LISTAR MÚSICAS TERÇO
 @app.route('/mostrarlistarmusicasterco', methods=['get'])
 def listar_musicasterco():
-    if len(musicasterco) > 0:
-        return render_template('terco/listarmusicasterco.html', lista=musicasterco)
+    if 'login' in session:
+        if len(musicasterco) > 0:
+            return render_template('terco/listarmusicasterco.html', lista=musicasterco)
 
 if __name__ == '__main__':
     app.run()
