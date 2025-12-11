@@ -1,4 +1,6 @@
 from flask import *
+from dao.banco import *
+from dao.usuarioDAO import UsuarioDAO
 
 app = Flask(__name__)
 
@@ -21,10 +23,74 @@ voluntarios=[['Nicolly','25/10','coral'],['cleiton','25/10','misterio']] #USUÁR
 reuniaoterco=[['20/10','19:00','matriz']] #LISTA DE REUNIÕES DO TERÇO
 musicasterco=[['acaso não sabeis','colo de Deus','3 mistério'],['ave maria','colo de Deus','entrada de Nossa Senhora']] #LISTA DE MÚSICAS DO TERÇO
 
+init_db()
+
+@app.before_request
+def pegar_sessao():
+    g.session = Session()
+
+@app.teardown_appcontext
+def encerrar_sessao(exception=None):
+    Session.remove()
+
 @app.route('/')
 def pagina_principal():
     return render_template('home/paginainicial.html')
 
+
+#LEVAR PARA A PÁGINA DE CADASTRAR USUÁRIO
+@app.route('/mostraradicionaru')
+def mostrar_add_usuario():
+    if 'login' in session:
+        if len(usuarios) > 0:
+            return render_template('home/cadastraru.html')
+
+    else:
+        return render_template('home/paginainicial.html')
+
+
+#LEVAR PARA MENU
+@app.route('/menu')
+def mostrar_menu():
+    if 'login' in session:
+        if len(batismos) > 0:
+            return render_template('home/menu.html')
+    else:
+        return render_template('home/paginainicial.html')
+
+
+# ADICIONAR USUÁRIO
+@app.route('/adicionarusuario', methods=['post'])
+def adicionar_usuario():
+    if 'login' in session:
+        global usuarios
+        if len(usuarios) > 0:
+            login = request.form.get('login')
+            senha = request.form.get('senha')
+            pastoral = request.form.get('pastoral')
+            usuarios.append([login, senha, pastoral])
+            print(usuarios)
+            mensagem = 'Usuário adicionado com sucesso!'
+            return render_template('home/paginainicial.html', msgc=mensagem)
+
+    else:
+        return render_template('home/paginainicial.html')
+
+
+#VERIFICAR SE O USUÁRIO ESTÁ LOGADO
+@app.route('/verificarlogin', methods=['post'])
+def verificar_logado():
+    userdao = UsuarioDAO(g.session)
+
+    email = request.form.get('email')
+    senha = request.form.get('senha')
+
+    usuario = userdao.autenticar(email, senha)
+
+    if usuario:
+        return render_template('home/menu.html')
+    else:
+        return render_template('home/paginainicial.html')
 
 
 @app.route('/escolhapq', methods=['post'])
@@ -63,14 +129,6 @@ def escolhenp():
      return render_template('home/paginainicial.html', erro = msg)'''
 
 
-#LEVAR PARA MENU
-@app.route('/menu')
-def mostrar_menu():
-    if 'login' in session:
-        if len(batismos) > 0:
-            return render_template('home/menu.html')
-    else:
-        return render_template('home/paginainicial.html')
 
 
 #LEVAR PARA BATISMO
@@ -136,47 +194,10 @@ def mostrar_terco():
         return render_template('home/paginainicial.html')
 
 
-#LEVAR PARA A PÁGINA DE CADASTRAR USUÁRIO
-@app.route('/mostraradicionaru')
-def mostrar_add_usuario():
-    if 'login' in session:
-        if len(usuarios) > 0:
-            return render_template('home/cadastraru.html')
-
-    else:
-        return render_template('home/paginainicial.html')
-
-
-#ADICIONAR USUÁRIO
-@app.route('/adicionarusuario', methods=['post'])
-def adicionar_usuario():
-    if 'login' in session:
-        global usuarios
-        if len(usuarios) > 0:
-            login = request.form.get('login')
-            senha = request.form.get('senha')
-            pastoral = request.form.get('pastoral')
-            usuarios.append([login,senha,pastoral])
-            print (usuarios)
-            mensagem = 'Usuário adicionado com sucesso!'
-            return render_template('home/paginainicial.html', msgc=mensagem)
-
-    else:
-        return render_template('home/paginainicial.html')
 
 
 
-@app.route('/verificarlogin', methods=['post'])
-def verificar_logado():
-    if 'login' in session:
-        if len(usuarios) > 0:
-            login = request.form.get('login')
-            senha = request.form.get('senha')
 
-            return render_template('home/paginainicial.html')
-
-    else:
-        return render_template('home/paginainicial.html')
 
 
 #IFRAME QUE LEVA PARA A PÁGINA adicionarbatizado.html
@@ -199,6 +220,7 @@ def adicionar_batizado():
             nomeb = request.form.get('nome')
             datab = request.form.get('data')
             turnob = request.form.get('turno')
+            novo_evento = Evento()
             batismos.append([nomeb, datab, turnob])
 
             mensagem = 'Seu batizado foi marcado com sucesso!'
