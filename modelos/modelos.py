@@ -8,17 +8,23 @@ class Usuario(Base):
 
     email = Column(String, primary_key=True)
     nome = Column(String)
+    tipo = Column(String)
     senha = Column(String)
+    pastoral = Column(String)
+    dataServir = Column(String)
 
     def __repr__(self):
         return f"<Usuario(email='{self.email}', nome='{self.nome}')>"
 
-class Produto(Base):
-    __tablename__ = 'produtos'
+class Evento(Base):
+    __tablename__ = 'eventos'
 
     id = Column(Integer, primary_key=True)
     nome = Column(String)
-    valor = Column(Float)
+    tipo = Column(String)
+    data = Column(String)
+    hora = Column(String)
+    local = Column(String)
 
     def __repr__(self):
-        return f"<Produto(id='{self.id}', nome='{self.nome}')>"
+        return f"<Evento(id='{self.id}', nome='{self.nome}')>"
