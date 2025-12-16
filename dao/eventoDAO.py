@@ -12,7 +12,7 @@ class EventoDAO:
         #autorizando modificações no banco/ gravando a alteração
         self.session.commit()
 
-    def listar_usuarios(self):
+    def listar_eventos(self):
         return self.session.query(Evento).all()
 
     def listar_eventos_por_tipo(self, tipo_evento):

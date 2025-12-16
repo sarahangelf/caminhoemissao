@@ -1,27 +1,35 @@
 from flask import *
 from dao.banco import *
 from dao.usuarioDAO import UsuarioDAO
+from dao.eventoDAO import  EventoDAO
+from modelos.modelos import Usuario
+from modelos.modelos import Evento
 
 app = Flask(__name__)
 
 app.secret_key = 'KJH#45K45JHQASs'
 
+
+
+
 usuarios = [['sarah','1',['batismo','catecumenato', 'coroinhas', 'liturgia', 'pascom', 'terco']], ['nicolly', '7', ['batismo','catecumenato', 'coroinhas', 'liturgia', 'pascom', 'terco']]] #nome, senha, pastoral
-batismos = [['levi', '16/08', 'manhã'], ['maria', '24/08', 'noite']] #LISTA DE BATIZADOS
 catecumeno= [['maria','23/09','boa vista'], ['jose','24/09','bela vista']] #USUÁRIO | LISTA DE CATECUMENOS
-encontro=[['29/08','manhã','salao'], ['30/08','tarde','igreja']]
-coroinhas=[['alice', '04/09', 'microfone'], ['milena', '11/09', 'missal']] #USUÁRIO | NOME, DATA E FUNÇÃO
-reuniaocor=[['13/09', '14:00', 'matriz']] #DATA, HORÁRIO E LOCAL
-subscor=[['milena', '11/09', 'missal']] #SUBSTITUIÇÕES DE COROINHAS, NOME, DATA E FUNÇÃO
+subscor=[['milena', '11/09', 'missal']] #USUARIO | SUBSTITUIÇÕES DE COROINHAS, NOME, DATA E FUNÇÃO
 pascom=[['rafael', '04/09'], ['ana', '23/09']] #USUÁRIO | NOME, DATA
-reuniaopas=[['17/09', '14:00', 'matriz']] #DATA, HORÁRIO E LOCAL
-subspas=[['ana', '23/09']] #SUBSTITUIÇÕES DE PASCOM, NOME, DATA E FUNÇÃO
+subspas=[['ana', '23/09']] # USUARIO | SUBSTITUIÇÕES DE PASCOM, NOME, DATA E FUNÇÃO
 liturgianos=[['Helena','02/10','2 leitura'],['Cedilma','03/10','1 leitura']] #USUÁRIO | LITURGIANOS, NOME, DATA E FUNÇÃO
-reuniaoli=[['matriz','26/10','manhã']] #LOCAL,DATA E HORÁRIO
-subsli=[['Diene','02/10', '2 leitura']]#SUBSTITUIÇÕES DA LITURGIA, NOME, DATA E FUNÇÃO
+subsli=[['Diene','02/10', '2 leitura']]# USUARIO | SUBSTITUIÇÕES DA LITURGIA, NOME, DATA E FUNÇÃO
 voluntarios=[['Nicolly','25/10','coral'],['cleiton','25/10','misterio']] #USUÁRIO | LISTA DE VOLUNTÁRIOS
-reuniaoterco=[['20/10','19:00','matriz']] #LISTA DE REUNIÕES DO TERÇO
-musicasterco=[['acaso não sabeis','colo de Deus','3 mistério'],['ave maria','colo de Deus','entrada de Nossa Senhora']] #LISTA DE MÚSICAS DO TERÇO
+
+
+#EVENTOS
+batismos = [['levi', '16/08', 'manhã'], ['maria', '24/08', 'noite']] #EVENTO | LISTA DE BATIZADOS
+encontro=[['29/08','manhã','salao'], ['30/08','tarde','igreja']] #EVENTO
+reuniaocor=[['13/09', '14:00', 'matriz']] #EVENTO | DATA, HORÁRIO E LOCAL
+reuniaopas=[['17/09', '14:00', 'matriz']] # EVENTO | DATA, HORÁRIO E LOCAL
+reuniaoli=[['matriz','26/10','manhã']] # EVENTO | LOCAL,DATA E HORÁRIO
+reuniaoterco=[['20/10','19:00','matriz']] # EVENTO | LISTA DE REUNIÕES DO TERÇO
+
 
 init_db()
 
@@ -41,40 +49,28 @@ def pagina_principal():
 #LEVAR PARA A PÁGINA DE CADASTRAR USUÁRIO
 @app.route('/mostraradicionaru')
 def mostrar_add_usuario():
-    if 'login' in session:
-        if len(usuarios) > 0:
-            return render_template('home/cadastraru.html')
-
-    else:
-        return render_template('home/paginainicial.html')
+                return render_template('home/login.html')
 
 
-#LEVAR PARA MENU
-@app.route('/menu')
-def mostrar_menu():
-    if 'login' in session:
-        if len(batismos) > 0:
-            return render_template('home/menu.html')
-    else:
-        return render_template('home/paginainicial.html')
 
 
 # ADICIONAR USUÁRIO
 @app.route('/adicionarusuario', methods=['post'])
 def adicionar_usuario():
-    if 'login' in session:
-        global usuarios
-        if len(usuarios) > 0:
-            login = request.form.get('login')
-            senha = request.form.get('senha')
-            pastoral = request.form.get('pastoral')
-            usuarios.append([login, senha, pastoral])
-            print(usuarios)
-            mensagem = 'Usuário adicionado com sucesso!'
-            return render_template('home/paginainicial.html', msgc=mensagem)
+    userdao = UsuarioDAO(g.session)
 
-    else:
-        return render_template('home/paginainicial.html')
+    email = request.form.get('email')
+    senha = request.form.get('senha')
+    tipo = request.form.get('tipo')
+    pastoral = request.form.get('pastoral')
+
+    novo_usuario = Usuario (email=email, senha=senha, tipo=tipo, pastoral=pastoral)
+    userdao.criar(novo_usuario)
+
+    print("FOI?")
+    mensagem = 'Usuário adicionado com sucesso!'
+    return render_template('home/paginainicial.html', msgc=mensagem)
+
 
 
 #VERIFICAR SE O USUÁRIO ESTÁ LOGADO
@@ -90,10 +86,19 @@ def verificar_logado():
     if usuario:
         return render_template('home/menu.html')
     else:
+        mensagem = 'Usuário não encontrado, se cadastre!'
+        return render_template('home/paginainicial.html', msgc=mensagem)
+
+#LEVAR PARA MENU
+@app.route('/menu')
+def mostrar_menu():
+    if 'login' in session:
+        return render_template('home/menu.html')
+    else:
         return render_template('home/paginainicial.html')
 
 
-@app.route('/escolhapq', methods=['post'])
+'''@app.route('/escolhapq', methods=['post'])
 def escolhenp():
     op = request.form.get('escolha')
     login = request.form.get('login')
@@ -104,7 +109,7 @@ def escolhenp():
             session['login'] = login
             return render_template('home/menu.html')
 
-    '''logado = False
+    logado = False
     for u in usuarios:
         if login == u[0] and senha == u[1] and op in u[2]:
             logado = True
@@ -135,7 +140,6 @@ def escolhenp():
 @app.route('/batismo')
 def mostrar_batismo():
     if 'login' in session:
-        if len(batismos) > 0:
             return render_template('batismo/batismo.html')
     else:
         return render_template('home/paginainicial.html')
@@ -145,7 +149,6 @@ def mostrar_batismo():
 @app.route('/catecumenato')
 def mostrar_catecumenato():
     if 'login' in session:
-        if len(catecumeno) > 0:
             return render_template('catecumenato/catecumenato.html')
     else:
         return render_template('home/paginainicial.html')
@@ -155,7 +158,6 @@ def mostrar_catecumenato():
 @app.route('/coroinhas')
 def mostrar_coroinhas():
     if 'login' in session:
-        if len(coroinhas) > 0:
             return render_template('coroinhas/coroinhas.html')
 
     else:
@@ -165,7 +167,6 @@ def mostrar_coroinhas():
 @app.route('/liturgia')
 def mostrar_liturgia():
     if 'login' in session:
-        if len(liturgianos) > 0:
             return render_template('liturgia/liturgia.html')
 
     else:
@@ -176,7 +177,6 @@ def mostrar_liturgia():
 @app.route('/pascom')
 def mostrar_pascom():
     if 'login' in session:
-        if len(pascom) > 0:
             return render_template('pascom/pascom.html')
 
     else:
@@ -187,7 +187,6 @@ def mostrar_pascom():
 @app.route('/terco')
 def mostrar_terco():
     if 'login' in session:
-        if len(voluntarios) > 0:
             return render_template('terco/terco.html')
 
     else:
@@ -204,7 +203,6 @@ def mostrar_terco():
 @app.route('/mostraradicionarb')
 def mostrar_add_batizado():
     if 'login' in session:
-        if len(batismos) > 0:
             return render_template('batismo/adicionarbatizado.html')
     else:
         return render_template('home/paginainicial.html')
@@ -215,13 +213,14 @@ def mostrar_add_batizado():
 @app.route('/adicionarbatizado', methods=['post'])
 def adicionar_batizado():
     if 'login' in session:
-        global batismos
-        if len(batismos) > 0:
+            eventodao = EventoDAO(g.session)
+
             nomeb = request.form.get('nome')
+            tipob = request.form.get('tipo')
             datab = request.form.get('data')
-            turnob = request.form.get('turno')
-            novo_evento = Evento()
-            batismos.append([nomeb, datab, turnob])
+            horab = request.form.get('hora')
+
+            novo_evento = Evento (nome=nomeb,tipo=tipob, data=datab, hora=horab)
 
             mensagem = 'Seu batizado foi marcado com sucesso!'
             return render_template('batismo/adicionarbatizado.html', msg=mensagem)
@@ -232,8 +231,10 @@ def adicionar_batizado():
 @app.route('/listarbatismos', methods=['get'])
 def listar_batismo():
     if 'login' in session:
-        if len(batismos) > 0:
-            return render_template('batismo/listarbatizados.html', lista=batismos)
+        eventodao = EventoDAO(g.session)
+
+        batismos = eventodao.listar_eventos_por_tipo('batizado')
+        return render_template('batismo/listarbatizados.html')
     else:
         return render_template('home/paginainicial.html')
 
@@ -241,12 +242,13 @@ def listar_batismo():
 @app.route('/adicionarcatecumeno', methods=['post'])
 def adicionar_catecumeno():
     if 'login' in session:
-        global catecumeno
-        if len(catecumeno) > 0:
-            nome = request.form.get('nome')
+            userdao = UsuarioDAO(g.session)
+
+            email = request.form.get('email')
             datadenascimento = request.form.get('datadenascimento')
             bairro = request.form.get('bairro')
-            catecumeno.append([nome,datadenascimento,bairro])
+
+            usuario = userdao.autenticar(email, datadenascimento,bairro)
             mensagem = 'Catecúmeno adicionado com sucesso!'
             return render_template('catecumenato/adicionarcatecumeno.html', msg=mensagem)
 
@@ -257,128 +259,149 @@ def adicionar_catecumeno():
 #LISTAR CATECUMENOS
 @app.route('/listarcatecumeno', methods=['get'])
 def listar_catecumeno():
-    if len(catecumeno) > 0:
-        return render_template('catecumenato/listarcatecumeno.html', lista=catecumeno)
+    userdao = UsuarioDAO(g.session)
+
+    usuario = userdao.listar_usuarios_por_pastoral('catecumenos')
+    return render_template('catecumenato/listarcatecumeno.html')
 
 
 #ADICIONAR ENCONTRO
 @app.route('/adicionarencontro', methods=['post'])
 def adicionar_encontro():
     if 'login' in session:
-        global encontro
-        if len(encontro) > 0:
-            data = request.form.get('data')
-            horario = request.form.get('horario')
-            local = request.form.get ('local')
-            encontro.append([data,horario,local])
-            mensagem2 = 'Encontro adicionado com sucesso!'
-            return render_template('catecumenato/adicionarencontro.html', msg=mensagem2)
+        eventodao = EventoDAO(g.session)
+
+        nomec = request.form.get('nome')
+        tipoc = request.form.get('tipo')
+        datac = request.form.get('data')
+        horac = request.form.get('hora')
+    
+        novo_evento = Evento(nome=nomec, tipo=tipoc, data=datac, hora=horac)
+
+        mensagem2 = 'Encontro adicionado com sucesso!'
+        return render_template('catecumenato/adicionarencontro.html', msg=mensagem2)
 
 
 #IFRAME QUE LEVA PARA A PÁGINA adicionarencontro.html
 @app.route('/mostraradicionare')
 def mostrar_add_encontro():
     if 'login' in session:
-        if len(encontro) > 0:
          return render_template('catecumenato/adicionarencontro.html')
 
 #IFRAME QUE LEVA PARA A PÁGINA adicionarcatecumeno.html
 @app.route('/mostraradicionarc')
 def mostrar_add_catecumeno():
     if 'login' in session:
-        if len(catecumeno) > 0:
             return render_template('catecumenato/adicionarcatecumeno.html')
 
 #LISTAR ENCONTROS
 @app.route('/listarencontros', methods=['get'])
 def listar_encontros():
     if 'login' in session:
-         if len(encontro) > 0:
-            return render_template('catecumenato/listare.html', lista=encontro)
+        eventodao = EventoDAO(g.session)
+
+        encontro = eventodao.listar_eventos_por_tipo('encontro')
+        return render_template('catecumenato/listare.html')
 
 #LISTAR OS COROINHAS
 @app.route('/mostrarlistarescala', methods=['get'])
 def listar_coroinhas():
     if 'login' in session:
-         if len(coroinhas) > 0:
-            return render_template('coroinhas/listarcoroinhas.html', lista=coroinhas)
+        userdao = UsuarioDAO(g.session)
 
-#LISTAR AS REUNIÕES
+        usuario = userdao.listar_usuarios_por_pastoral('coroinhas')
+        return render_template('coroinhas/listarcoroinhas.html')
+
+#LISTAR AS REUNIÕES COROINHAS
 @app.route('/mostrarlistarreuniao', methods=['get'])
 def listar_reunioescor():
     if 'login' in session:
-        if len(reuniaocor) > 0:
-            return render_template('coroinhas/listarreuniaocor.html', lista=reuniaocor)
+        eventodao = EventoDAO(g.session)
 
-#LISTAR SUBSTITUIÇÕES
+        reunioescor = eventodao.listar_eventos_por_tipo('reunião')
+        return render_template('coroinhas/listarreuniaocor.html')
+
+#LISTAR SUBSTITUIÇÕES COROINHAS
 @app.route('/mostrarlistarsubs', methods=['get'])
 def listar_subscor():
     if 'login' in session:
-         if len(subscor) > 0:
-            return render_template('coroinhas/listarsubscor.html', lista=subscor)
+        userdao = UsuarioDAO(g.session)
+
+        usuario = userdao.listar_usuarios_por_pastoral('coroinhas')
+        return render_template('coroinhas/listarsubscor.html')
 
 #LISTAR OS PASCOM
 @app.route('/mostrarlistarescalapas', methods=['get'])
 def listar_pascom():
     if 'login' in session:
-        if len(pascom) > 0:
-            return render_template('pascom/listarpascom.html', lista=pascom)
+        userdao = UsuarioDAO(g.session)
+
+        usuario = userdao.listar_usuarios_por_pastoral('pascom')
+        return render_template('pascom/listarpascom.html')
 
 #LISTAR AS REUNIÕES PASCOM
 @app.route('/mostrarlistarreuniaopas', methods=['get'])
 def listar_reunioespas():
     if 'login' in session:
-        if len(reuniaopas) > 0:
-            return render_template('pascom/listarreuniaopas.html', lista=reuniaopas)
+        eventodao = EventoDAO(g.session)
+
+        reunioespas = eventodao.listar_eventos_por_tipo('reunião')
+        return render_template('pascom/listarreuniaopas.html')
 
 #LISTAR SUBSTITUIÇÕES PASCOM
 @app.route('/mostrarlistarsubspas', methods=['get'])
 def listar_subspas():
     if 'login' in session:
-        if len(subspas) > 0:
-            return render_template('pascom/listarsubspas.html', lista=subspas)
+        userdao = UsuarioDAO(g.session)
 
-#LISTAR OS LITURGIANOS
+        usuario = userdao.listar_usuarios_por_pastoral('pascom')
+        return render_template('pascom/listarsubspas.html')
+
+#LISTAR OS LITURGIA
 @app.route('/mostrarlistarescalali', methods=['get'])
-def listar_liturgianos():
+def listar_liturgia():
     if 'login' in session:
-        if len(liturgianos) > 0:
-            return render_template('liturgia/listarliturgia.html', lista=liturgianos)
+        userdao = UsuarioDAO(g.session)
+
+        usuario = userdao.listar_usuarios_por_pastoral('liturgia')
+        return render_template('liturgia/listarliturgia.html')
 
 #LISTAR AS REUNIÕES DA LITURGIA
 @app.route('/mostrarlistarreuniaoli', methods=['get'])
 def listar_reunioesli():
     if 'login' in session:
-        if len(reuniaoli) > 0:
-            return render_template('liturgia/listarreuniaoli.html', lista=reuniaoli)
+        eventodao = EventoDAO(g.session)
+
+        reunioeslit = eventodao.listar_eventos_por_tipo('reunião')
+        return render_template('liturgia/listarreuniaoli.html')
 
 #LISTAR SUBSTITUIÇÕES LITURGIA
 @app.route('/mostrarlistarsubsli', methods=['get'])
 def listar_subsli():
     if 'login' in session:
-        if len(subsli) > 0:
-            return render_template('liturgia/listarsubli.html', lista=subsli)
+        userdao = UsuarioDAO(g.session)
+
+        usuario = userdao.listar_usuarios_por_pastoral('liturgia')
+        return render_template('liturgia/listarsubli.html')
 
 #LISTAR OS VOLUNTÁRIOS DO TERÇO
 @app.route('/mostrarlistarescalaterco', methods=['get'])
 def listar_voluntarios():
     if 'login' in session:
-        if len(voluntarios) > 0:
-            return render_template('terco/listarescalasterco.html', lista=voluntarios)
+        userdao = UsuarioDAO(g.session)
+
+        usuario = userdao.listar_usuarios_por_pastoral('voluntátios')
+        return render_template('terco/listarescalasterco.html')
 
 #LISTAR AS REUNIÕES DO TERÇO
 @app.route('/mostrarlistarreuniaoterco', methods=['get'])
 def listar_reunioesterco():
     if 'login' in session:
-        if len(reuniaoterco) > 0:
-            return render_template('terco/listarreuniaoterco.html', lista=reuniaoterco)
+        eventodao = EventoDAO(g.session)
 
-#LISTAR MÚSICAS TERÇO
-@app.route('/mostrarlistarmusicasterco', methods=['get'])
-def listar_musicasterco():
-    if 'login' in session:
-        if len(musicasterco) > 0:
-            return render_template('terco/listarmusicasterco.html', lista=musicasterco)
+        reunioesterco = eventodao.listar_eventos_por_tipo('reunião')
+        return render_template('terco/listarreuniaoterco.html')
+
 
 if __name__ == '__main__':
     app.run()

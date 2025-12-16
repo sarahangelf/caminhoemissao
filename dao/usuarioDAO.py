@@ -18,6 +18,9 @@ class UsuarioDAO:
     def listar_usuarios(self):
         return self.session.query(Usuario).all()
 
+    def listar_usuarios_por_pastoral(self, tipo_pastoral):
+        return self.session.query(Usuario).filter_by(tipo=tipo_pastoral).all()
+
     def autenticar(self, email, senha):
         user = self.buscar_por_email(email)
         if user and user.senha == senha:
