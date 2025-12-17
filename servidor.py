@@ -11,26 +11,6 @@ app.secret_key = 'KJH#45K45JHQASs'
 
 
 
-
-usuarios = [['sarah','1',['batismo','catecumenato', 'coroinhas', 'liturgia', 'pascom', 'terco']], ['nicolly', '7', ['batismo','catecumenato', 'coroinhas', 'liturgia', 'pascom', 'terco']]] #nome, senha, pastoral
-catecumeno= [['maria','23/09','boa vista'], ['jose','24/09','bela vista']] #USUÁRIO | LISTA DE CATECUMENOS
-subscor=[['milena', '11/09', 'missal']] #USUARIO | SUBSTITUIÇÕES DE COROINHAS, NOME, DATA E FUNÇÃO
-pascom=[['rafael', '04/09'], ['ana', '23/09']] #USUÁRIO | NOME, DATA
-subspas=[['ana', '23/09']] # USUARIO | SUBSTITUIÇÕES DE PASCOM, NOME, DATA E FUNÇÃO
-liturgianos=[['Helena','02/10','2 leitura'],['Cedilma','03/10','1 leitura']] #USUÁRIO | LITURGIANOS, NOME, DATA E FUNÇÃO
-subsli=[['Diene','02/10', '2 leitura']]# USUARIO | SUBSTITUIÇÕES DA LITURGIA, NOME, DATA E FUNÇÃO
-voluntarios=[['Nicolly','25/10','coral'],['cleiton','25/10','misterio']] #USUÁRIO | LISTA DE VOLUNTÁRIOS
-
-
-#EVENTOS
-batismos = [['levi', '16/08', 'manhã'], ['maria', '24/08', 'noite']] #EVENTO | LISTA DE BATIZADOS
-encontro=[['29/08','manhã','salao'], ['30/08','tarde','igreja']] #EVENTO
-reuniaocor=[['13/09', '14:00', 'matriz']] #EVENTO | DATA, HORÁRIO E LOCAL
-reuniaopas=[['17/09', '14:00', 'matriz']] # EVENTO | DATA, HORÁRIO E LOCAL
-reuniaoli=[['matriz','26/10','manhã']] # EVENTO | LOCAL,DATA E HORÁRIO
-reuniaoterco=[['20/10','19:00','matriz']] # EVENTO | LISTA DE REUNIÕES DO TERÇO
-
-
 init_db()
 
 @app.before_request
@@ -49,12 +29,12 @@ def pagina_principal():
 #LEVAR PARA A PÁGINA DE CADASTRAR USUÁRIO
 @app.route('/mostraradicionaru')
 def mostrar_add_usuario():
-                return render_template('home/login.html')
+    return render_template('home/login.html')
 
 
 
 
-# ADICIONAR USUÁRIO
+#ADICIONAR USUÁRIO
 @app.route('/adicionarusuario', methods=['post'])
 def adicionar_usuario():
     userdao = UsuarioDAO(g.session)
@@ -98,43 +78,10 @@ def mostrar_menu():
         return render_template('home/paginainicial.html')
 
 
-'''@app.route('/escolhapq', methods=['post'])
-def escolhenp():
-    op = request.form.get('escolha')
-    login = request.form.get('login')
-    senha = request.form.get('senha')
-
-    for user in usuarios:
-        if user[0] == login and user[1] == senha:
-            session['login'] = login
-            return render_template('home/menu.html')
-
-    logado = False
-    for u in usuarios:
-        if login == u[0] and senha == u[1] and op in u[2]:
-            logado = True
-
-    if logado:
-
-        if op == 'batismo':
-            return render_template('batismo.html')
-        elif op == 'catecumenato':
-            return render_template('catecumenato.html')
-        elif op == 'coroinhas':
-            return render_template('coroinhas.html')
-        elif op == 'liturgia':
-            return render_template('liturgia.html')
-        elif op == 'pascom':
-            return render_template('pascom.html')
-        elif op == 'terco':
-            return render_template('terco.html')
-
-    else:
-     msg = '*ERRO! O login ou a senha está errado!'
-     return render_template('home/paginainicial.html', erro = msg)'''
-
-
-
+#LEVAR PARA O INICIO
+@app.route('/paginainicial')
+def mostrar_paginainicial():
+        return render_template('home/paginainicial.html')
 
 #LEVAR PARA BATISMO
 @app.route('/batismo')
@@ -193,12 +140,6 @@ def mostrar_terco():
         return render_template('home/paginainicial.html')
 
 
-
-
-
-
-
-
 #IFRAME QUE LEVA PARA A PÁGINA adicionarbatizado.html
 @app.route('/mostraradicionarb')
 def mostrar_add_batizado():
@@ -206,7 +147,6 @@ def mostrar_add_batizado():
             return render_template('batismo/adicionarbatizado.html')
     else:
         return render_template('home/paginainicial.html')
-
 
 
 #ADICIONAR BATIZADO

@@ -1,0 +1,22 @@
+body{
+
+    background-color: floralwhite;
+    text-align: center;
+    color: #270808;
+}
+
+
+
+.opcoes{
+    text-align: center;
+    margin-top: 100px;
+}
+
+.voltar{
+    text-align: center
+}
+
+.rodape{
+    text-align: center;
+    margin-top: 160px;
+}
