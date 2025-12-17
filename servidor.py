@@ -64,6 +64,7 @@ def verificar_logado():
     usuario = userdao.autenticar(email, senha)
 
     if usuario:
+        session['login'] = email
         return render_template('home/menu.html')
     else:
         mensagem = 'Usuário não encontrado, se cadastre!'
